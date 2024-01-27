@@ -44,7 +44,7 @@
               </li>
             </ul>
             <form class="d-flex">
-              <button class="btn btn-primary" type="submit">GIT</button>
+              <a href="https://github.com/iagobrdev/test-insight" class="btn btn-primary" target="_blank" >GIT</a>
             </form>
           </div>
         </div>
