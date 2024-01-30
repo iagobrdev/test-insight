@@ -182,16 +182,24 @@ public class ReportsCount {
         
         for(int i = 0; i < atrasos.getAll().size(); i++) {
             
+            //se a diferença em horas for = 00:00 não fará nada...
             if(!clas.returnHoursAndMinutes(atrasos.getAll().get(i).getDuration()).equals("00:00")) {
             
+                //verifica se existe mais registros na list
                 if(i + 1 < atrasos.getAll().size()) {
                     
-                    if(atrasos.getAll().get(i + 1).getB().after(atrasos.getAll().get(i).getA()) && atrasos.getAll().get(i + 1).getB().before(atrasos.getAll().get(i + 1).getHoraSaida())) {
+                    Timestamp a = atrasos.getAll().get(i).getA();
+                    Timestamp proxB = atrasos.getAll().get(i + 1).getB();
+                    Timestamp horaSaida = atrasos.getAll().get(i).getHoraSaida();
+                    
+                    //compara se a marcação de entrada do próximo registro é maior que a marcação de saída atual e se a marcação do proximo registro é antes do horário de saída
+                    if(proxB.after(a) && proxB.before(horaSaida)) {
 
                         Duration duration = Duration.between(atrasos.getAll().get(i).getMarcSaida().toLocalDateTime(), atrasos.getAll().get(i + 1).getMarcEntrada().toLocalDateTime());
 
                         atrasos.update(i, atrasos.getAll().get(i + 1).getB(), duration);
 
+                        //se depois da atualização acima, o próximo registro B for igual ao registro B atual, ira setar diferença = 00:00 (não será exibido no browzer)
                         if(df.format(atrasos.getAll().get(i + 1).getB()).equals(df.format(atrasos.getAll().get(i).getB()))) {
                             
                             duration = Duration.between(atrasos.getAll().get(i).getB().toLocalDateTime(), atrasos.getAll().get(i).getB().toLocalDateTime());
