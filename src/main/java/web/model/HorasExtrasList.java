@@ -18,7 +18,7 @@ public class HorasExtrasList {
     private Timestamp marcSaida;
     private Timestamp horaEntrada;
     private Timestamp horaSaida;
-    private Duration duration;
+   private Duration duration;
 
     public Timestamp getHoraEntrada() {
         return horaEntrada;

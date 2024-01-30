@@ -50,4 +50,9 @@ public class HorariosTrabalhoService {
         list.get(index).setRegEntrada(entrada);
         list.get(index).setRegSaida(saida);
     }
+    
+    public void setRegister(int index, int register) {
+        
+        list.get(index).setRegister(register);
+    }
 }

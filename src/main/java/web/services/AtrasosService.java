@@ -5,6 +5,8 @@
  */
 package web.services;
 
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import web.model.AtrasosList;
@@ -37,5 +39,10 @@ public class AtrasosService {
     
     public void removeIndex(int index) {
         list.remove(index);
+    }
+    
+    public void update(int index, Timestamp b, Duration duration) {
+        list.get(index).setB(b);
+        list.get(index).setDuration(duration);
     }
 }

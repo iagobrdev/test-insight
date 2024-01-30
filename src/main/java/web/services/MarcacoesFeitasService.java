@@ -7,6 +7,8 @@ package web.services;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import web.model.MarcacoesFeitasList;
 
@@ -25,6 +27,14 @@ public class MarcacoesFeitasService {
     
     //função responsável por retornar a lista
     public List<MarcacoesFeitasList> getAll() {
+        
+        //organiza a lista por horários de forma crescente...
+        Collections.sort(list, new Comparator<MarcacoesFeitasList>() {
+            public int compare(MarcacoesFeitasList o1, MarcacoesFeitasList o2) {
+                return o1.getRegEntrada().compareTo(o2.getRegEntrada());
+            }
+        });
+        
         return list;
     }
     

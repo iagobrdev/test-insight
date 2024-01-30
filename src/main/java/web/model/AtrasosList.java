@@ -18,6 +18,8 @@ public class AtrasosList {
     private Timestamp marcSaida;
     private Timestamp horaEntrada;
     private Timestamp horaSaida;
+    private Timestamp a;
+    private Timestamp b;
     private Duration duration;
 
     public Timestamp getHoraEntrada() {
@@ -52,6 +54,22 @@ public class AtrasosList {
         this.marcSaida = marcSaida;
     }
 
+    public Timestamp getA() {
+        return a;
+    }
+
+    public void setA(Timestamp a) {
+        this.a = a;
+    }
+
+    public Timestamp getB() {
+        return b;
+    }
+
+    public void setB(Timestamp b) {
+        this.b = b;
+    }
+    
     public Duration getDuration() {
         return duration;
     }

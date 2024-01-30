@@ -31,4 +31,8 @@ public class MarcacoesFeitasList {
     public void setRegSaida(Timestamp regSaida) {
         this.regSaida = regSaida;
     }
+    
+    public int compareTo(MarcacoesFeitasList o) {
+      return getRegEntrada().compareTo(o.getRegEntrada());
+    }
 }

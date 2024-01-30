@@ -55,7 +55,7 @@
             <% if(!reports.returnHoursAndMinutes(hours.getAll().get(i).getDuration()).equals("00:00")) { %>
             <tr>
                 <td><%= df.format(hours.getAll().get(i).getMarcEntrada()) + " - " + df.format(hours.getAll().get(i).getMarcSaida()) %> </td>
-                <td><%= df.format(hours.getAll().get(i).getHoraEntrada()) + " - " + df.format(hours.getAll().get(i).getHoraSaida()) %> </td>
+                <td><%= df.format(hours.getAll().get(i).getA()) + " - " + df.format(hours.getAll().get(i).getB()) %> </td>
                 <td><%= reports.returnHoursAndMinutes(hours.getAll().get(i).getDuration()) %> hrs </td>
             </tr>
 

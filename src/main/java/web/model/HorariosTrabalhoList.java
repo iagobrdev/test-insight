@@ -15,6 +15,7 @@ public class HorariosTrabalhoList {
     
     private Timestamp regEntrada;
     private Timestamp regSaida;
+    private int register;
 
     public Timestamp getRegEntrada() {
         return regEntrada;
@@ -30,6 +31,14 @@ public class HorariosTrabalhoList {
 
     public void setRegSaida(Timestamp regSaida) {
         this.regSaida = regSaida;
+    }
+
+    public int getRegister() {
+        return register;
+    }
+
+    public void setRegister(int register) {
+        this.register = register;
     }
     
     public int compareTo(HorariosTrabalhoList o) {

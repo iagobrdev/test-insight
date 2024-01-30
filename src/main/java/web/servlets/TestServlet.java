@@ -110,13 +110,13 @@ public class TestServlet extends HttpServlet {
                 
                 //verifica se a hora de SAÍDA é menor que a de ENTRADA, se for, adiciona um dia a mais no horário de SAIDA (Ex.: 23:00 - 03:00) significa que entra as 23:00 hrs de um dia e sai as 03:00 hrs do outro dia.
                 if(_saida.before(_entrada)) {
-                    _date.setDate(_date.getDate() + 1);
-                    _saida = Timestamp.valueOf(df.format(_date) + " " + dff.format(_saida) + ":00");
+                    _date.setDate(_date.getDate() - 1);
+                    _entrada = Timestamp.valueOf(df.format(_date) + " " + dff.format(_entrada) + ":00");
                 }
                 
                 //chama a classe responsável pelas validações de horários e retorna uma mensagem do tipo String
                 HourValidations val = new HourValidations();
-                String msgm = val.validation(_entrada, _saida, null);
+                String msgm = val.validationHours(_entrada, _saida, null);
                 
                 //se o retorno for = sucess, as informações serão inseridas no List
                 if(msgm.equals("sucess")) {
@@ -125,6 +125,7 @@ public class TestServlet extends HttpServlet {
                     HorariosTrabalhoList regList = new HorariosTrabalhoList();
                     regList.setRegEntrada(_entrada);
                     regList.setRegSaida(_saida);
+                    regList.setRegister(0);
                     regEntSai.Insert(regList);
 
                     response.sendRedirect("home");
@@ -157,13 +158,13 @@ public class TestServlet extends HttpServlet {
             
             //verifica se a hora de SAÍDA é menor que a de ENTRADA, se for, adiciona um dia a mais no horário de SAIDA (Ex.: 23:00 - 03:00) significa que entra as 23:00 hrs de um dia e sai as 03:00 hrs do outro dia.
             if(_saida.before(_entrada)) {
-                _date.setDate(_date.getDate() + 1);
-                _saida = Timestamp.valueOf(df.format(_date) + " " + dff.format(_saida) + ":00");
+                _date.setDate(_date.getDate() - 1);
+                _entrada = Timestamp.valueOf(df.format(_date) + " " + dff.format(_entrada) + ":00");
             }
             
             //chama a classe responsável pelas validações de horários e retorna uma mensagem do tipo String
             HourValidations val = new HourValidations();
-            String msgm = val.validation(_entrada, _saida, Integer.parseInt(editID));
+            String msgm = val.validationHours(_entrada, _saida, Integer.parseInt(editID));
             
             //se o retorno for = sucess, as informações serão inseridas no List
             if(msgm.equals("sucess")) {
@@ -201,16 +202,31 @@ public class TestServlet extends HttpServlet {
 
                 //verifica se a hora de SAÍDA é menor que a de ENTRADA, se for, adiciona um dia a mais no horário de SAIDA (Ex.: 23:00 - 03:00) significa que entra as 23:00 hrs de um dia e sai as 03:00 hrs do outro dia.
                 if(_saida.before(_entrada)) {
-                    _date.setDate(_date.getDate() + 1);
-                    _saida = Timestamp.valueOf(df.format(_date) + " " + dff.format(_saida) + ":00");
+                    _date.setDate(_date.getDate() - 1);
+                    _entrada = Timestamp.valueOf(df.format(_date) + " " + dff.format(_entrada) + ":00");
                 }
 
-                MarcacoesFeitasList marcList = new MarcacoesFeitasList();
-                marcList.setRegEntrada(_entrada);
-                marcList.setRegSaida(_saida);
-                marcacoes.Insert(marcList);
+                //chama a classe responsável pelas validações de horários e retorna uma mensagem do tipo String
+                HourValidations val = new HourValidations();
+                String msgm = val.validationMarkings(_entrada, _saida, null);
+                
+                //se o retorno for = sucess, as informações serão inseridas no List
+                if(msgm.equals("sucess")) {
+                
+                    MarcacoesFeitasList marcList = new MarcacoesFeitasList();
+                    marcList.setRegEntrada(_entrada);
+                    marcList.setRegSaida(_saida);
+                    marcacoes.Insert(marcList);
 
-                response.sendRedirect("home");
+                    response.sendRedirect("home");
+                }
+                else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                    request.setAttribute("msgmmarc", msgm);
+                    request.setAttribute("regEntSai", regEntSai.getAll());
+                    request.setAttribute("marcacoes", marcacoes.getAll());
+                    dispatcher.forward(request, response);
+                }
             }
             else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
@@ -232,14 +248,28 @@ public class TestServlet extends HttpServlet {
 
                 //verifica se a hora de SAÍDA é menor que a de ENTRADA, se for, adiciona um dia a mais no horário de SAIDA (Ex.: 23:00 - 03:00) significa que entra as 23:00 hrs de um dia e sai as 03:00 hrs do outro dia.
                 if(_saida.before(_entrada)) {
-                    _date.setDate(_date.getDate() + 1);
-                    _saida = Timestamp.valueOf(df.format(_date) + " " + dff.format(_saida) + ":00");
+                    _date.setDate(_date.getDate() - 1);
+                    _entrada = Timestamp.valueOf(df.format(_date) + " " + dff.format(_entrada) + ":00");
                 }
 
-                //se a validação der ok, atualiza os dados do registro passando o index da List como referência.
-                marcacoes.Update(Integer.parseInt(marcEditID), _entrada, _saida);
+                //chama a classe responsável pelas validações de horários e retorna uma mensagem do tipo String
+                HourValidations val = new HourValidations();
+                String msgm = val.validationMarkings(_entrada, _saida, Integer.parseInt(marcEditID));
+                
+                //se o retorno for = sucess, as informações serão inseridas no List
+                if(msgm.equals("sucess")) {
+                    //se a validação der ok, atualiza os dados do registro passando o index da List como referência.
+                    marcacoes.Update(Integer.parseInt(marcEditID), _entrada, _saida);
 
-                response.sendRedirect("home");
+                    response.sendRedirect("home");
+                }
+                else {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                    request.setAttribute("msgmmarc", msgm);
+                    request.setAttribute("regEntSai", regEntSai.getAll());
+                    request.setAttribute("marcacoes", marcacoes.getAll());
+                    dispatcher.forward(request, response);
+                }
             }
             else {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
