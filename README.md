@@ -9,7 +9,7 @@ Esse é meu teste lógico para a vaga de programador Full Stack Java / Web na em
 	- Java (jdk-18.0.2.1)
 	 - JPS
 	 - Servelts
-	 - Apache TomCat 8.5.98 (Usuário: admin ; Senha: admin)
+	 - Apache TomCat 8.5.98
 
 - Frontend
 	 - HTML
